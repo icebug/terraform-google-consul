@@ -72,7 +72,7 @@ resource "google_compute_instance_template" "consul_server" {
   )
 
   scheduling {
-    automatic_restart   = true
+    automatic_restart   = !var.preemptible
     on_host_maintenance = "MIGRATE"
     preemptible         = var.preemptible
   }

@@ -62,7 +62,7 @@ resource "google_compute_instance_template" "consul_server" {
   metadata_startup_script = var.startup_script
   metadata = merge(
     {
-      "${var.metadata_key_name_for_cluster_size}" = var.cluster_size,
+      "${var.metadata_key_name_for_cluster_size}" = local.total_cluster_size,
 
       # The Terraform Google provider currently doesn't support a `metadata_shutdown_script` argument so we manually
       # set it here using the instance metadata.
@@ -74,7 +74,7 @@ resource "google_compute_instance_template" "consul_server" {
   scheduling {
     automatic_restart   = true
     on_host_maintenance = "MIGRATE"
-    preemptible         = false
+    preemptible         = var.preemptible
   }
 
   disk {

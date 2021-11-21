@@ -29,7 +29,7 @@ variable "machine_type" {
 }
 
 variable "cluster_size" {
-  description = "The number of nodes to have in the Consul cluster. We strongly recommended that you use either 3 or 5."
+  description = "The number of nodes to create in the Consul cluster. We strongly recommended that you use either 3 or 5."
   type        = number
 }
 
@@ -52,6 +52,23 @@ variable "shutdown_script" {
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.
 # ---------------------------------------------------------------------------------------------------------------------
+
+locals {
+  total_cluster_size = var.total_cluster_size > 0 ? var.total_cluster_size : var.cluster_size
+}
+
+
+variable "total_cluster_size" {
+  description = "The number of total nodes to have in the Consul cluster. We strongly recommended that you use either 3 or 5. If empty, var.cluster_size will be used."
+  type        = number
+  default     = 0
+}
+
+variable "preemptible" {
+  description = "Should the Compute Instance run as preemtible. If empty, false will be used."
+  type        = bool
+  default     = false
+}
 
 variable "image_project_id" {
   description = "The name of the GCP Project where the image is located. Useful when using a separate project for custom images. If empty, var.gcp_project_id will be used."

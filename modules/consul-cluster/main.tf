@@ -19,8 +19,9 @@ resource "google_compute_region_instance_group_manager" "consul_server" {
   project = var.gcp_project_id
   name    = "${var.cluster_name}-ig"
 
-  base_instance_name = var.cluster_name
-  region             = var.gcp_region
+  base_instance_name        = var.cluster_name
+  region                    = var.gcp_region
+  distribution_policy_zones = var.gcp_zones
 
   version {
     instance_template = google_compute_instance_template.consul_server.self_link
